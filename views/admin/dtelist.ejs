@@ -1,0 +1,65 @@
+<%- include('./header.ejs') %>
+<style>
+    th,td{
+        text-align: center; 
+    }
+    
+</style>
+<div id="inq" class="p-2 " style="height: 88%; border: 1px solid black; position: relative; ">
+    <div id="top" class="d-flex align-items-center justify-content-between"     >
+        <h4>DTE Details</h4>
+        <form class="text-end pe-1" >
+          <input class="mt-1 px-1" type="text" name="searchinq2" id="searchBranch" placeholder="Enter branch...">
+          <input class="mt-1 px-1" type="date" name="searchinq1" id="searchDate" placeholder="Enter date...">
+          <input  class="px-2" type="submit" value="Search" style="border-radius: 6px; border: 1px solid black; background-color:white; color: #992c2f;">
+        </form>
+    </div>
+    <div id="inquiry" style="height: 90.5%; overflow-y: auto; transition: all ease 0.5s;">
+        <table class="table table-striped mt-1">
+   <tr>
+       <th>S.No.</th>
+       <th>Faculty Name</th>
+       <th>Round</th>
+        <th>Marks</th>
+        <th>RollNo</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Eligible Category</th>
+        <th>Alloted Category</th>
+        <th>Admission Date</th>
+        <th>Branch</th>
+        <th>Remark</th>
+        <th>FollowUp Date</th>
+        <th>Final status</th>
+    </tr>
+    
+    <% i=1 %>
+        <% user.forEach(user => { %>
+            <tr>
+               <td><%= i++ %></td>
+               <td class="text-nowrap"><%= user.facultyId.name %></td>
+               <td><%= user.fileName%></td>
+                <td><%= user.marks %></td>
+                <td style="white-space: nowrap;"><%= user.rollNo %></td>
+                <td><%= user.name %></td>
+                <td ><%= user.phoneNo %></td>
+                <td><%= user.eligibleCategory %></td>
+                <td><%= user.allotedCategory %></td>
+                <td style="white-space: nowrap;"><%= user.admissionDate %></td>
+                <td ><%= user.branch %></td>
+                <td class="text-nowrap" ><%= user.comment %></td>
+                <td style="white-space: nowrap;"><%= user.followUpDate %></td>
+                <td ><%= user.finalStatus %></td>
+            </tr>
+       <% })  %>
+
+   
+</table>
+    </div>
+</div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+

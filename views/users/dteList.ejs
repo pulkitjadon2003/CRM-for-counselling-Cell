@@ -1,0 +1,98 @@
+<%- include('./header.ejs') %>
+
+
+<style>
+    #inq #inquiry::-webkit-scrollbar{
+        display: none;
+    }
+    #inq::-webkit-scrollbar{
+        display: none;
+    }
+   
+</style>
+
+
+
+
+
+<div id="inq" class="p-2 " style="height: 89%; border: 1px solid black; position: relative; ">
+    <div id="top" class="d-flex align-items-center justify-content-between"     >
+        <h4>DTE Details</h4>
+        <form class="text-end pe-1" >
+            
+            <input class="mt-1 px-1" type="text" placeholder="Search Username ,email, mobile" name="searchinq">
+            <input  class="px-2" type="submit" value="Search" style="border-radius: 6px; border: 1px solid black; background-color:white; color: #992c2f;">
+        </form>
+    </div>
+    <div id="inquiry" style="height: 90.5%; overflow-y: auto; transition: all ease 0.5s;">
+        <table class="table table-striped mt-1">
+    <tr>
+        <th>S.No.</th>
+        <th>Marks</th>
+        <th>RollNo</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Eligible Category</th>
+        <th>Alloted Category</th>
+        <th>Admission Date</th>
+        <th>Branch</th>
+        <th>Previous Details</th>
+        <th>Comment</th>
+        <th>FollowUp Date</th>
+        <th class="text-center">Actions</th>
+    </tr>
+    
+    <% i=1 %>
+        <% usersinq.forEach(user => { %>
+            <tr>
+                <td><%= i++ %></td>
+                <td><%= user.marks %></td>
+                <td><%= user.rollNo %></td>
+                <td><%= user.name %></td>
+                <td ><%= user.phoneNo %></td>
+                <td><%= user.eligibleCategory %></td>
+                <td><%= user.allotedCategory %></td>
+                <td ><%= user.admissionDate %></td>
+                <td ><%= user.branch %></td>
+                <td class="text-warning"><%= user.comment %>
+                    </td>
+<td><form action="/updatestatus/<%= user._id %>" method="post">
+        <textarea type="text" name="comment" ></textarea>
+        <input type="hidden" name="name" value="<%=user.name %>">
+    </td>
+    <td class="text-warning"> <input type="date" name="followUpDate" required> <br> <%if(user.followUpDate){%> Last FollowUp: <br> <%= user.followUpDate%>   <%}%>  </td>
+    <td>
+                <select class="form-select" name="status" id="floatingSelect" aria-label="Floating label select example" required>
+                    <option value="">Select Follow Up</option>
+                    <option value="Registered">Registered</option>
+                    <option value="Reporting">Reporting</option>
+                    <option value="Go For Clc">Go for CLC</option>
+                    <option value="Not Picked">Not Picked</option>
+                    <option value="Not Decided">Not Decided Till Now</option>
+                    <option value="Not Interested">Not Interested</option>
+                    
+                </select>
+      <button type="submit" class="btn btn-danger">update</button>
+    </form></td>
+                
+                
+            </tr>
+       <% })  %>
+
+   
+</table>
+    </div>
+</div>
+
+
+    
+</div>
+
+<!-- <script src="/Scripts/filterJs.js"></script> -->
+    <script src="/Scripts/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+   
+    
+</body>
+</html>

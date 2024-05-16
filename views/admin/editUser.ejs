@@ -1,0 +1,252 @@
+<%- include('./header.ejs') %>
+
+
+<% if(typeof message !== 'undefined'){%>
+    <p style="color: red;">
+        <%= message %>
+    </p>
+        <%}%>
+
+
+<div class="row">
+        
+  <form action="/admin/edit-user-inq" method="post" style="display: contents;">
+    
+    <div id="formInq " class="container col-lg-5 ms-5 ">
+      <p class="fs-4">Student Inquiry Form</p>
+      
+        <div class="form-floating mb-2 ">
+            <input type="text" class="form-control" name="applicantName" id="floatingName" placeholder="Applicant Name" value="<%= users.applicantName %>" required >
+            <label for="floatingName" class="d-flex">Applicant Name<h5 style="color: red;" >*</h5></label>
+          </div>
+          <div class="form-floating mb-2 ">
+            <input type="number" maxlength="10" class="form-control" name="mobile" id="floatingContact" placeholder="Contact no." value="<%= users.mobile %>" required>
+            <label for="floatingContact" class="d-flex">Contact No.<h5 style="color: red;">*</h5></label>
+          </div>
+          <div class="form-floating mb-2 ">
+            <input type="date" class="form-control" name="dob" id="floatingDOB" placeholder="DOB" value="<%= users.dob %>" required>
+            <label for="floatingDOB" class="d-flex">Date of Birth<h5 style="color: red;">*</h5></label>
+          </div>
+          <div class="form-floating d-flex mb-2 p-1 " >
+            <h6>Gender:<h5 style="color: red;">*</h5></h6>
+            <div class="form-check mx-4">
+              <label class="form-check-label" for="RadioMale">
+                  <input  class="form-check-input" name="gender" type="radio" value="Male" id="RadioMale" <% if(users.gender == 'Male'){%> checked <% }%>>
+                  <span>Male</span>
+                </label>
+              </div>
+              <div class="form-check mx-4">
+                <label class="form-check-label" for="RadioFemale">
+                  <input  class="form-check-input" name="gender" type="radio" value="Female" id="RadioFemale" <% if(users.gender == 'Female'){%> checked <% }%>>
+                  <span>Female</span>
+                </label>
+              </div>
+          </div>
+          <div class="form-floating mb-2">
+            <textarea type="text"  class="form-control" name="address" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 80px" required><%= users.address %></textarea>
+            <label for="floatingTextarea2" class="d-flex">Address<h5 style="color: red;">*</h5></label>
+          </div>
+        
+       
+
+          <div class="row">
+            <div class="col-md">
+
+              <div class="form-floating mb-2">
+                <select class="form-select" name="qualifyingDegree" id="floatingSelect"  aria-label="Floating label select example" required>
+                  <option value="" >Select Qualifying Degree</option>\
+                  <% const degree = ['12th','BTech','PG','UG','Other'] %>
+                  <% degree.forEach((elem)=>{ %>
+                    <option <% if(elem == users.qualifyingDegree){%>selected <%}%> value="<%= elem%>"><%= elem%></option>
+                 <% }) %>
+                  
+                </select>
+                <label for="floatingSelect" class="d-flex">Qualifying Degree<h5 style="color: red;">*</h5></label>
+              </div>
+                         </div>
+                         
+                        </div>
+
+                        <div class="form-floating mb-2">
+                          <select class="form-select" name="jeeAppearance" id="floatingSelect" aria-label="Floating label select example" required>
+                            <option value="" >Select Yes/No </option>
+                            <% const options = ['Yes','No'] %>
+                            <% options.forEach((elem)=>{ %>
+                    <option <% if(elem == users.jeeAppearance){%>selected <%}%> value="<%= elem%>"><%= elem%></option>
+                                
+                              <% }) %>
+                  
+                          </select>
+                <label for="floatingSelect" class="d-flex">JEE Appearance<h5 style="color: red;">*</h5></label>
+
+                        </div>
+                        
+
+<div class="col-md">
+
+<div class="form-floating mb-2">
+<select class="form-select" id="select-course" name="course" aria-label="Floating label select example" required>
+<option selected>Select Course</option>
+
+</select>
+<label for="floatingSelect" class="d-flex">Course<h5 style="color: red;">*</h5></label>
+</div>
+</div>
+<div class="col-md">
+
+<div class="row g-3  mb-2">
+    
+    <div class="col-md">      
+      <div class="form-floating mb-2">
+        
+        <select class="form-select select-branch" id="select-branch1" name="branch" aria-label="Floating label select example" style="display: none;" >
+          <option value="">Select</option>
+          
+        </select>
+        <label for="floatingSelect" id="branchLabel1" style="display: none ;">Branch<span style="color: red;">*</span></label>
+      </div>
+    </div>
+    <div class="col-md">      
+      <div class="form-floating mb-2">
+        <select class="form-select select-branch" id="select-branch2" name="branch" aria-label="Floating label select example" style="display: none;">
+          <option selected>Select</option>
+          
+        </select>
+        <label for="floatingSelect" id="branchLabel2" style="display: none ;">Branch<span style="color: red;">*</span></label>
+      </div>
+    </div>
+
+    <div class="col-md">      
+      <div class="form-floating ">
+        <select class="form-select select-branch" id="select-branch3" name="branch" aria-label="Floating label select example" style="display: none;">
+          <option selected>Select</option>
+          
+        </select>
+        <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch<span style="color: red;">*</span>  </label>
+      </div>
+    </div>
+   
+   
+  </div>
+</div>
+          <!-- </div> -->
+
+         
+          
+          
+        </div>
+        
+          <div class="container col-lg-5 ms-5 mt-5" id="formInq">
+            <div class="form-floating mb-2">
+              <select class="form-select" name="domicile" id="floatingSelect" aria-label="Floating label select example" required>
+                <option value="" >Select Yes/No </option>
+                <% const optionOfDomicile = ['Yes','No'] %>
+                <% optionOfDomicile.forEach((elem)=>{ %>
+                    <option <% if(elem == users.domicile){%>selected <%}%> value="<%= elem%>"><%= elem%></option>
+                                
+                <% }) %>
+              </select>
+    <label for="floatingSelect" class="d-flex">MP Domicile<h5 style="color: red;">*</h5></label>
+
+            </div>
+            <div class="form-floating mb-2 ">
+              <select type="text" name="category" class="form-select" id="floatingInput" placeholder="Category" required>
+                <option value="" >Select </option>
+                <% const optionsOfCategory = ['SC','ST','OBC','EWS','General'] %>
+                            <% optionsOfCategory.forEach((elem)=>{ %>
+                    <option <% if(elem == users.category){%>selected <%}%> value="<%= elem%>"><%= elem%></option>       
+                              <% }) %>
+                
+              </select>
+              <label for="floatingSelect" class="d-flex">Category<h5 style="color: red;">*</h5></label>
+            </div>
+            <div class="form-floating mb-2 ">
+              <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="email" value="<%= users.email %>">
+              <label for="floatingEmail" class="d-flex">Email address</label>
+            </div>
+            
+            <div class="form-floating mb-2 ">
+              <input type="text" name="fatherName" class="form-control" id="floatingFN" placeholder="Father's Name" value="<%= users.fatherName%>" required>
+              <label for="floatingFN" class="d-flex">Father's Name<h5 style="color: red;">*</h5></label>
+            </div>
+            <div class="form-floating mb-2">
+              <input type="number"  name="guardianMobile" class="form-control" id="floatingGC" placeholder="Guardian Contact" value="<%= users.guardianMobile %>" required>
+              <label for="floatingGC" class="d-flex">Guardian Contact<h5 style="color: red;">*</h5></label>
+            </div>
+     <div class="row g-2">
+      <div class="col-md">
+        <div class="form-floating ">
+          <select class="form-select" id="state-select" name="state" aria-label="Floating label select example" required>
+            <option value="">Select State</option>
+           
+          </select>
+          <label for="floatingSelect" class="d-flex">State<h5 style="color: red;">*</h5></label>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-floating">
+          <select class="form-select" id="city-select" name="city" aria-label="Floating label select example" required>
+            <option value="">Select city</option>
+           
+          </select>
+          <label for="floatingSelect" class="d-flex">City<h5 style="color: red;">*</h5></label>
+        </div>
+      </div>
+
+     </div>
+          
+              
+            
+
+            <div class="form-floating mb-2 mt-2">
+              <select name="inquirySource" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+               <option selected>Select Source</option>
+               <% const optionsOfSource = ['Social Media','News','Alumni','Friends','School/Coaching','Hoardings'] %>
+                            <% optionsOfSource.forEach((elem)=>{ %>
+                    <option <% if(elem == users.inquirySource){%>selected <%}%> value="<%= elem%>"><%= elem%></option>       
+                              <% }) %>
+          
+              </select>
+              <label for="floatingSelect">Source Enquiry</label>
+            </div>
+
+           
+               <div class="form-floating mb-2 mt-2">
+              <select name="status" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
+                <option value="">Select Status</option>
+                <% const optionsOfStatus = ['Interested','Hold','Not Interested'] %>
+                            <% optionsOfStatus.forEach((elem)=>{ %>
+                        <option <% if(elem == users.status){%>selected <%}%> value="<%= elem%>"><%= elem%></option>       
+                              <% }) %>
+              
+              </select>
+              <label for="floatingSelect" class="d-flex">Enquiry Status<h5 style="color: red;">*</h5></label>
+            </div>
+
+
+             <div class="form-floating mb-2 ">
+            <input type="date" class="form-control" name="registrationDate" id="floatingInqdate" placeholder="Inquiry Date" value="<%= users.registrationDate %>" required>
+            <label for="floatingInqdate" class="d-flex">Enquiry Date<h5 style="color: red;">*</h5></label>
+          </div>
+          <div class="form-floating mb-2 ">
+              <input type="text" name="facultyName" class="form-control" id="floatingEmail" placeholder="facultyName" value="<%= users.facultyName %>" required>
+              <label for="floatingEmail" class="d-flex">Faculty Name<h5 style="color: red;">*</h5></label>
+            </div>
+
+            <button id="btn" class="btn mb-2  " type="submit">Submit</button>
+          </div>
+          </form>
+    </div>
+
+
+
+    </div>
+    <script src="../../Scripts/script.js"></script>
+    <script src="../../Scripts/stateCity.js"></script>
+    <script src="../../Scripts/inquiryCourse.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        
+        </body>

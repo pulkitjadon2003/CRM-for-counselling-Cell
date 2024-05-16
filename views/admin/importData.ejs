@@ -1,0 +1,58 @@
+<%- include('./header.ejs') %>
+
+
+<style>
+  form{
+    position: absolute;
+    top: 40%;
+    right: 40%;
+    border: 1px solid black;
+    border-radius: 5px;
+    /* box-shadow: 2px 2px 15px black; */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #infoDownload{
+    position: absolute;
+    bottom: 5%;
+    right:  5%;
+    border: 1px solid black;
+    border-radius: 5px;
+    /* box-shadow: 2px 2px 15px black; */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+</style>
+<% if(message.length>0){%>
+  <div class="alert alert-success ">
+    <%= message%>
+  </div>
+  <%}%>
+
+  <% if(error.length>0){%>
+    <div class="alert alert-danger ">
+      <%= error%>
+    </div>
+    <%}%>
+  <h5 class="p-5">Import DTE List</h5>
+  <form action="/admin/importData" method="post" enctype="multipart/form-data">
+    <input type="text" placeholder="Enter Name" name='fileName'>
+    <input type="file" name="file" accept=".xls,.xlsx">
+    <input type="submit" value="submit">
+  </form>
+
+  <!-- <div id="infoDownload">
+    <ol>
+      <li>Download the <a href="/download">Template</a> from here</li>
+    </ol>
+  </div> -->
+
+  
+    
+    </body>
+</html>

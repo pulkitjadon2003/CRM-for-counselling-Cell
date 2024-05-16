@@ -1,0 +1,44 @@
+<%- include('./header.ejs') %>
+
+<style>
+#selection{
+  position: absolute;
+  top: 40%;
+  left: 35%;
+}
+</style>
+
+<div id="selection" class="w-25">
+  <h5>Reporting Reports</h5>
+  
+<form action="/admin/numberReport" method="post">
+     <div class="form-floating mb-2 ">
+                        <input type="date" class="form-control" name="StartDate" id="floatingDOB" placeholder="StartDate">
+                        <label for="floatingDOB" class="d-flex">Start Date<h5 style="color: red;">*</h5></label>
+                      </div>
+    <div class="form-floating mb-2 ">
+                        <input type="date" class="form-control" name="EndDate" id="floatingDOB" placeholder="EndDate">
+                        <label for="floatingDOB" class="d-flex">End Date<h5 style="color: red;">*</h5></label>
+                      </div>
+                      <!-- <div class="form-floating mb-2 ">
+                        <input type="text" class="form-control" name="branch" id="floatingBranch" placeholder="Enter Branch">
+                        <label for="floatingBranch" class="d-flex">Enter Branch<h5 style="color: red;">*</h5></label>
+                      </div> -->
+    <input class="btn btn-warning" type="submit" value="submit">
+  </form>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

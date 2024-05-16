@@ -1,0 +1,105 @@
+<%- include('./header.ejs') %>
+
+
+<div class="container px-2 ">
+  <h1>Reports</h1>
+    <a class="btn btn-info" href="/admin/exportcounsil">Export Report As Excel</a>
+    <!-- <a class="btn btn-info" href="/admin/exportcounsilPDF">Export Report PDF</a> -->
+
+        <a class="btn btn-info" href="/admin/importData">Import DTE Data</a>
+
+        <a class="btn btn-info" href="/admin/numberReport">Reporting Reports</a>
+ 
+
+
+</div>
+
+<style>
+    #inq #inquiry::-webkit-scrollbar{
+        display: none;
+    }
+    #inq::-webkit-scrollbar{
+        display: none;
+    }
+      body{
+            overflow-y: hidden;
+          }
+
+          .container-fluid{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+          }
+</style>
+  
+                    <div class="container-fluid p-5 col-md-10 d-flex align-items-center justify-content-around" >
+                       
+        
+                                <div class="card" onclick="location.href='/admin/registerReports'" >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/ghhwiltn.json"
+                                        trigger="in"
+                                        delay="200"
+                                        state="in-reveal"
+                                        colors="primary:#121331,secondary:#992c2f"
+        
+                                        
+                                        >
+                                    </lord-icon>                    
+                                        <div class="card-body">
+                                          <p class="card-text text-center ">Registration Reports</p>
+                                        </div>
+                                </div>
+        
+                                <div class="card" onclick="location.href='/admin/inquiryReports'" >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/wzwygmng.json"
+                                        trigger="in"
+                                        state="in-reveal"
+                                        colors="primary:#121331,secondary:#992c2f"
+                                        >
+                                    </lord-icon>                    
+                                        <div class="card-body">
+                                          <p class="card-text text-center ">Inquiry Reports</p>
+                                        </div>
+                                </div>  
+
+                                <div class="card" onclick="location.href='/admin/facultyLeave'" >
+                                  <lord-icon
+                                      src="https://cdn.lordicon.com/bgebyztw.json"
+                                      trigger="in"
+                                      delay="200"
+                                      state="morph-group"
+                                      colors="primary:#121331,secondary:#992c2f"
+                                      >
+                                  </lord-icon>                    
+                                      <div class="card-body">
+                                        <p class="card-text text-center ">Faculty Leave</p>
+                                      </div>
+                              </div> 
+                               <div class="card" onclick="location.href='/admin/dteList'" >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/ghhwiltn.json"
+                                        trigger="in"
+                                        delay="200"
+                                        state="in-reveal"
+                                        colors="primary:#121331,secondary:#992c2f"
+        
+                                        
+                                        >
+                                    </lord-icon>                    
+                                        <div class="card-body">
+                                          <p class="card-text text-center ">DTE Reports</p>
+                                        </div>
+                                </div>
+        
+        
+                          
+                    </div>
+                      
+        
+            
+
+
+

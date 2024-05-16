@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print DTE List</title>
+<style>
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            height: 100%;
+            width: 100%;
+            padding: 1cm;
+        }
+        form {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            /* border: 1px solid #000; Border for form */
+        }
+
+        #passportPhoto{
+        border: 1px solid #000;
+
+        }
+        button{
+            display: none;
+        }
+        
+    }
+    #header {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        
+    }
+    #header img {
+        height: 100%;
+        
+        margin: 0 20px; 
+    }
+    
+    
+    h4{
+        text-align: center;
+        margin-top: 0;
+    }
+
+    table {
+        position: relative;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        height: 40px;
+    }
+    
+    #main{
+        height: 11.7in;
+        width: 8.3in;
+        position: relative;
+    }
+    #table{
+        position: relative;
+    }
+    #signature{
+        display: flex;
+        justify-content: space-between;
+    }
+    button{
+        position: absolute;
+        right: 10%;
+        padding: 3px 10px;
+        border-radius: 5px;
+        background-color: beige;
+        font-size: 15px;
+    }
+</style>
+</head>
+<body>
+    <div id="main">
+    <div id="header">
+        <img src="/images/ITMGOILogo.png" alt="Logo 2">
+    </div>
+    <h3 align="center"> <u>Summary of Allotment Follow Up </u></h3>
+    <div id="table">
+        
+        <form id="print-form">
+            <h4>No. of allotments =  <%= allotementNo %></h4>
+            <button  id="button" onclick="printForm()">Print</button>
+            <h4>Duration of Reporting : <%= StartDate %>  to <%= EndDate %></h4>
+        <table>
+            <tr>
+                <th colspan="2" width="25%" >No. of Students Reporting</th>
+                <th>No. of Students Go for CLC Round</th>
+                <th>Not Picked</th>
+                <th>Not Decided Till Now</th>
+                <th>Not Interested/ Taken admission in other College</th>
+            </tr>
+            <tr>
+                 <tr>
+        <th>Date</th>
+        <th>Count</th>
+        <td align="center" rowspan="<%= datewiseCounts.length +1%>"><%= goForClcCount %></td>
+                <td align="center" rowspan="<%= datewiseCounts.length +1%>"><%= notPickingUpCount %></td>
+                <td align="center" rowspan="<%= datewiseCounts.length +1%>"><%= notDecidedCount %></td>
+                <td align="center" rowspan="<%= datewiseCounts.length +1%>"><%= notInterestedCount %></td>
+    </tr>
+    <% datewiseCounts.forEach(entry => { %>
+        <tr>
+            <td><%= entry.date %> 
+            <% if(actualDate < entry.date){ %>
+                (Expected)
+            <% }%>
+            </td>
+            <td><%= entry.count %></td>
+        </tr>
+    <% }); %>
+                
+            </tr>
+           
+
+            <tr>
+                <th >Total Enquiries</th>
+                <td><%= reportCount %></td>
+                <th align="center" >Grand Total
+                </th >
+                <td colspan="3">
+                    <%= reportCount %> + <%= goForClcCount %> + <%= notPickingUpCount %> + <%= notDecidedCount %> + <%= notInterestedCount %> = <%= grandTotal %>
+                </td>
+                    
+                
+            </tr>
+        </table>
+            
+        </div>
+    </form>
+
+
+    <script>
+        function printForm() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

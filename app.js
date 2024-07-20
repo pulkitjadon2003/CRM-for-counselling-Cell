@@ -3,7 +3,7 @@ const app = express();
 
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://0.0.0.0/collegeProject")
+  .connect("mongodb+srv://dbUser:pulkit12@pulkitscluster.5odkhln.mongodb.net/?retryWrites=true&w=majority&appName=PulkitsCluster")
   .then((result) => {
     console.log("connection successfull");
   })
@@ -11,7 +11,10 @@ mongoose
     console.log(err);
   });
 
-  
+  //
+
+//
+
 const config = require('./config/config')
 
 const session = require("express-session");

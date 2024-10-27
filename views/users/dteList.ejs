@@ -60,7 +60,7 @@
         <textarea type="text" name="comment" ></textarea>
         <input type="hidden" name="name" value="<%=user.name %>">
     </td>
-    <td class="text-warning"> <input type="date" name="followUpDate" required> <br> <%if(user.followUpDate){%> Last FollowUp: <br> <%= user.followUpDate%>   <%}%>  </td>
+    <td class="text-warning"> <input type="date" name="followUpDate" required> <br> Last FollowUp: <br> <%= user.followUpDate%></td>
     <td>
                 <select class="form-select" name="status" id="floatingSelect" aria-label="Floating label select example" required>
                     <option value="">Select Follow Up</option>

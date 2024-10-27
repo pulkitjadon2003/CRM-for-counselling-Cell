@@ -1,10 +1,5 @@
 <%- include('./header.ejs') %>
-<style>
-    th,td{
-        text-align: center; 
-    }
-    
-</style>
+
 <div id="inq" class="p-2 " style="height: 88%; border: 1px solid black; position: relative; ">
     <div id="top" class="d-flex align-items-center justify-content-between"     >
         <h4>DTE Details</h4>
@@ -19,7 +14,6 @@
    <tr>
        <th>S.No.</th>
        <th>Faculty Name</th>
-       <th>Round</th>
         <th>Marks</th>
         <th>RollNo</th>
         <th>Name</th>
@@ -37,8 +31,7 @@
         <% user.forEach(user => { %>
             <tr>
                <td><%= i++ %></td>
-               <td class="text-nowrap"><%= user.facultyId.name %></td>
-               <td><%= user.fileName%></td>
+               <td><%= user.facultyId.name %></td>
                 <td><%= user.marks %></td>
                 <td style="white-space: nowrap;"><%= user.rollNo %></td>
                 <td><%= user.name %></td>
@@ -47,7 +40,7 @@
                 <td><%= user.allotedCategory %></td>
                 <td style="white-space: nowrap;"><%= user.admissionDate %></td>
                 <td ><%= user.branch %></td>
-                <td class="text-nowrap" ><%= user.comment %></td>
+                <td ><%= user.comment %></td>
                 <td style="white-space: nowrap;"><%= user.followUpDate %></td>
                 <td ><%= user.finalStatus %></td>
             </tr>

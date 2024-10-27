@@ -20,26 +20,26 @@ const upload = multer({ storage: stroage });
 router.get("/", userControl.login);
 // router.get("/clg", userControl.clg);
 router.get("/clg",auth.islogin, userControl.Dashboard);
-router.get("/downloadReport",auth.islogin, userControl.downloadReport);
+router.get("/downloadReport", userControl.downloadReport);
 
 
-router.get("/dteList",auth.islogin, userControl.DteList);
-router.get("/export-user",auth.islogin, userControl.exportUser);
+router.get("/dteList", userControl.DteList);
+router.get("/export-user", userControl.exportUser);
 
 
 
-router.get("/fillINQ",auth.islogin, userControl.fillINQ);
+router.get("/fillINQ", userControl.fillINQ);
 router.post("/counsil", userControl.counsil);
-router.get("/registrationForm",auth.islogin, userControl.registrationForm);
+router.get("/registrationForm", userControl.registrationForm);
 router.post("/registrationFrom", userControl.registrationData);
-router.get("/viewreg/:id",auth.islogin, userControl.viewFullRegistration);
-router.get("/editreg/:id",auth.islogin, userControl.editRegistration);
-router.get("/registration/:id",auth.islogin, userControl.registrationFormF);
+router.get("/viewreg/:id", userControl.viewFullRegistration);
+router.get("/editreg/:id", userControl.editRegistration);
+router.get("/registration/:id", userControl.registrationFormF);
 router.post("/edit-user-inq", userControl.updateInquiry);
 
 router.post("/edit-user-reg", userControl.updateRegistration);
 
-router.get("/leaveForm",auth.islogin, userControl.leaveForm);
+router.get("/leaveForm", userControl.leaveForm);
 router.post("/leaveForm", userControl.leaveLoad);
 
 router.post("/updatestatusinq/:id", userControl.updatestatusinq);
@@ -76,12 +76,8 @@ router.get("/view/:id", userControl.viewFullInquiry);
 router.get("/editinq/:Id", auth.islogin, userControl.editload);
 router.post("/edit", upload.single("image"), userControl.updateProfile);
 
-router.get("/print/:Id", userControl.printForm)
+router.get("/print/:Id",userControl.printForm)
 
-
-// router.get("*", (req, res) => {
-//   res.redirect("/clg");
-// });
 
 
 

@@ -3,8 +3,7 @@
 
 <div id="inq" class="p-2 " style="height: 88%; border: 1px solid black; position: relative; ">
     <div id="top" class="d-flex align-items-center justify-content-between"     >
-               <h4>Registration Details</h4>
-
+        <h4>Inquiry Details</h4>
         <form class="text-end pe-1" >
           <input class="mt-1 px-1" type="text" name="searchinq2" id="searchBranch" placeholder="Enter branch...">
           <input class="mt-1 px-1" type="date" name="searchinq1" id="searchDate" placeholder="Enter date...">
@@ -19,7 +18,6 @@
         <th>Name</th>
        
         <th>Mobile</th>
-        <th>Date</th>
        
         <th>Course</th>
         <th>Branch</th>
@@ -37,8 +35,6 @@
                 <td><%= user.applicantName %></td>
               
                 <td><%= user.mobile %></td>
-                <td><%= user.registrationDate %></td>
-
               
                 <td><%= user.courses.course %></td>
                 <td ><%= user.courses.branch %></td>

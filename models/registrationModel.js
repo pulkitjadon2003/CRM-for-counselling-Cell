@@ -159,9 +159,16 @@ const registrationSchema = new mongoose.Schema(
     },
   
 
-    additionDetails: [{
-      type:String,
-    }],
+    additionDetails: {
+      hostel: {
+        type: String,
+        // required: true,
+      },
+      busExeption: {
+        type: String,
+        // required: true,
+      },
+    },
     registrationStatus: {
       type: String,
       default: "Approved",

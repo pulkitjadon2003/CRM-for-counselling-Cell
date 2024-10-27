@@ -2842,7 +2842,7 @@ const citiesByState = {
 
 const stateSelect = document.getElementById("state-select");
 const citySelect = document.getElementById("city-select");
-
+console.log(stateSelect,citySelect);
 states.forEach((state) => {
   const option = document.createElement("option");
   option.value = state;

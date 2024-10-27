@@ -31,7 +31,7 @@
         <th>Name</th>
         <th>Phone No.</th>
         <th>Branch</th>
-        <th>Approval Status</th>
+        <th>Inquiry Status</th>
         <th>Previous comment</th>
         <th>Comment</th>
         
@@ -43,6 +43,8 @@
     <% i=1 %>
 
         <% usersinq.forEach(user => { %>
+           
+          
             <tr>
                 <td><%= i++ %></td>
                 <td><%= user.applicantNo %></td>
@@ -51,19 +53,19 @@
 
                 <td ><%= user.courses.branch %></td>
                 <td class="<%= user.inquiryStatus%>" style="text-transform: capitalize;"><%= user.inquiryStatus %></td>
-                <td class="text-danger "><b><%= user.comment %> </b> <br> <% if(user.today!='' ){ %> on <%} %>  <%= user.today%></td>
+                <td class="text-danger "><b><%= user.comment %></b></td>
 
 <td><form action="/updatestatusinq/<%= user._id %>" method="post">
         <textarea type="text" name="comment"  placeholder="<%= user.comment %>"></textarea>
-        <input type="hidden" name="name" value="<%=user.name%>">
+        <input type="hidden" name="name" value="<%=user.name %>">
     </td>
     <td>
-        <button type="submit" class="btn btn-danger">Update</button>  
+        <button type="submit" class="btn btn-danger">update</button>  
     </form></td>
 
                 <td class=" gap-2 ">
                     <a href="/editinq/<%= user._id %>"class="btn btn-outline-light"> Edit<i class="ri-edit-2-fill" style="color: black;"></i></a>
-                    <a href="/view/<%= user._id %>" class="btn btn-outline-light" >View <i class="ri-eye-fill" style="color: black;"></i></a>
+                    <a href="/view/<%= user._id %>" class="btn btn-outline-light" >view <i class="ri-eye-fill" style="color: black;"></i></a>
                     <a href="/registration/<%= user._id %>" class="btn btn-success">Register</a>
                 </td>
                 

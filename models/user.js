@@ -66,9 +66,6 @@ const userSchema = new mongoose.Schema(
     followUpDate: {
       type: String,
     },
-    fileName:{
-      type:String,
-    },
   },
   { timestamps: true }
 );

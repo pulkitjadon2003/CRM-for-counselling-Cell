@@ -66,7 +66,7 @@
                         <div class="row g-3  mb-2">
                         <div class="col-md">
                         <div class="form-floating mb-2 ">
-                          <select id="mpDomicile" class="form-select mb-2" name="mpDomicile" required>
+                          <select id="city-select" class="form-select mb-2" name="mpDomicile" required>
                             <option value="">Select</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
@@ -281,7 +281,7 @@
                       <option selected>Select</option>
                       
                     </select>
-                    <label for="floatingSelect" id="branchLabel1" style="display: none ;">Branch 1</label>
+                    <label for="floatingSelect" id="branchLabel1" style="display: none ;">Branch</label>
                   </div>
                 </div>
                 <div class="col-md">      
@@ -290,7 +290,7 @@
                       <option selected>Select</option>
                       
                     </select>
-                    <label for="floatingSelect" id="branchLabel2" style="display: none ;">Branch 2</label>
+                    <label for="floatingSelect" id="branchLabel2" style="display: none ;">Branch</label>
                   </div>
                 </div>
 
@@ -300,73 +300,11 @@
                       <option selected>Select</option>
                       
                     </select>
-                    <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch 3</label>
+                    <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch</label>
                   </div>
                 </div>
                
                
-              </div>
-
-              <div class="row g-3  mb-2">
-                <div class="col-md">      
-                  <div class="form-floating mb-2">
-                    <select class="form-select select-branch" id="select-branch2" name="branch" aria-label="Floating label select example" style="display: none;">
-                      <option selected>Select</option>
-                      
-                    </select>
-                    <label for="floatingSelect" id="branchLabel2" style="display: none ;">Branch 4</label>
-                  </div>
-                </div>
-
-                <div class="col-md">      
-                  <div class="form-floating ">
-                    <select class="form-select select-branch" id="select-branch3" name="branch" aria-label="Floating label select example" style="display: none;">
-                      <option selected>Select</option>
-                      
-                    </select>
-                    <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch 5</label>
-                  </div>
-                </div>
-                <div class="col-md">      
-                  <div class="form-floating ">
-                    <select class="form-select select-branch" id="select-branch3" name="branch" aria-label="Floating label select example" style="display: none;">
-                      <option selected>Select</option>
-                      
-                    </select>
-                    <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch 6</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row g-3  mb-2">
-                <div class="col-md">      
-                  <div class="form-floating mb-2">
-                    <select class="form-select select-branch" id="select-branch2" name="branch" aria-label="Floating label select example" style="display: none;">
-                      <option selected>Select</option>
-                      
-                    </select>
-                    <label for="floatingSelect" id="branchLabel2" style="display: none ;">Branch 7</label>
-                  </div>
-                </div>
-
-                <div class="col-md">      
-                  <div class="form-floating ">
-                    <select class="form-select select-branch" id="select-branch3" name="branch" aria-label="Floating label select example" style="display: none;">
-                      <option selected>Select</option>
-                      
-                    </select>
-                    <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch 8</label>
-                  </div>
-                </div>
-                <div class="col-md">      
-                  <div class="form-floating ">
-                    <select class="form-select select-branch" id="select-branch3" name="branch" aria-label="Floating label select example" style="display: none;">
-                      <option selected>Select</option>
-                      
-                    </select>
-                    <label for="floatingSelect" id="branchLabel3" style="display: none ;">Branch 9</label>
-                  </div>
-                </div>
               </div>
                       <h5>Registration Fee Details <span style="color: red;">*</span></h5>
 
@@ -398,21 +336,21 @@
 
                       <h6>Opted Scheme Benefits:</h6>
                       <div class="btn-group mb-2" role="group" aria-label="Basic checkbox toggle button group">
-                        <input type="checkbox" class="btn-check" name="schemeOpted" value="Early Bird" id="btncheck1" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="earlyBird" id="btncheck1" autocomplete="off">
                         <label class="btn btn-outline-danger"  for="btncheck1">Early Bird</label>
                       
-                        <input type="checkbox" class="btn-check" name="schemeOpted" value="Meril List" id="btncheck2" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="meritList" id="btncheck2" autocomplete="off">
                         <label class="btn btn-outline-danger" for="btncheck2">Merit List</label>
                       
                       
-                        <input type="checkbox" class="btn-check" name="schemeOpted" value="Special Case" id="btncheck3" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="specialCase" id="btncheck3" autocomplete="off">
                         <label class="btn btn-outline-danger" for="btncheck3">Special Case</label>
 
 
-                        <input type="checkbox" class="btn-check" name="schemeOpted" value="TFW" id="btncheck4" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="tfw" id="btncheck4" autocomplete="off">
                         <label class="btn btn-outline-danger" for="btncheck4">TFW</label>
                       
-                        <input type="checkbox" class="btn-check" name="schemeOpted" value="EWS" id="btncheck5" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="ews" id="btncheck5" autocomplete="off">
                         <label class="btn btn-outline-danger" for="btncheck5">EWS</label>
                       </div>
 
@@ -420,10 +358,10 @@
                       </h6>
 
                       <div class="btn-group mb-2" role="group" aria-label="Basic checkbox toggle button group">
-                        <input type="checkbox" class="btn-check" name="Hostel" value="Hostel" id="btncheck6" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="hostel" value="hostel" id="btncheck6" autocomplete="off">
                         <label class="btn btn-outline-danger"  for="btncheck6">Hostel</label>
                       
-                        <input type="checkbox" class="btn-check" name="busExeption" value="Bus Exeption" id="btncheck7" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="busExeption" value="busExeption" id="btncheck7" autocomplete="off">
                         <label class="btn btn-outline-danger" for="btncheck7">Bus Exeption</label>
           
                       </div>

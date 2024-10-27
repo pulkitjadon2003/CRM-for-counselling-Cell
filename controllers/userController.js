@@ -77,21 +77,21 @@ class userControl {
           // multiple searching
           $or: [
             {
-              applicantName: { $regex: "^" + searchinq + "$", $options: "i" },
+              applicantName: { $regex: ".*" + searchinq + ".*", $options: "i" },
             },
             { applicantNo: { $regex: ".*" + searchinq + ".*", $options: "i" } },
-            { mobile: { $regex: "^" + searchinq + "$", $options: "i" } },
-            { fatherName: { $regex: "^" + searchinq + "$", $options: "i" } },
-            { email: { $regex: "^" + searchinq + "$", $options: "i" } },
+            { mobile: { $regex: ".*" + searchinq + ".*", $options: "i" } },
+            { fatherName: { $regex: ".*" + searchinq + ".*", $options: "i" } },
+            { email: { $regex: ".*" + searchinq + ".*", $options: "i" } },
             {
               "courses.course": {
-                $regex: "^" + searchinq + "$",
+                $regex: ".*" + searchinq + ".*",
                 $options: "i",
               },
             },
             {
               "courses.branch": {
-                $regex: "^" + searchinq + "$",
+                $regex: ".*" + searchinq + ".*",
                 $options: "i",
               },
             },
@@ -112,20 +112,20 @@ class userControl {
           facultyId: userData._id,
           // multiple searching
           $or: [
-            { studentName: { $regex: "^" + searchreq + "$", $options: "i" } },
+            { studentName: { $regex: ".*" + searchreq + ".*", $options: "i" } },
             { applicantNo: { $regex: ".*" + searchreq + ".*", $options: "i" } },
-            { mobile: { $regex: "^" + searchreq + "$", $options: "i" } },
-            { fatherName: { $regex: "^" + searchreq + "$", $options: "i" } },
-            { email: { $regex: "^" + searchreq + "$", $options: "i" } },
+            { mobile: { $regex: ".*" + searchreq + ".*", $options: "i" } },
+            { fatherName: { $regex: ".*" + searchreq + ".*", $options: "i" } },
+            { email: { $regex: ".*" + searchreq + ".*", $options: "i" } },
             {
               "courses.course": {
-                $regex: "^" + searchreq + "$",
+                $regex: ".*" + searchreq + ".*",
                 $options: "i",
               },
             },
             {
               "courses.branch": {
-                $regex: "^" + searchreq + "$",
+                $regex: ".*" + searchreq + ".*",
                 $options: "i",
               },
             },
@@ -272,7 +272,7 @@ class userControl {
 
           $or: [
             {
-              registrationDate: { $gte: start, $lte: end },
+              registrationDate: { $regex: "^" + search, $options: "i" },
             },
           ],
         });
@@ -287,14 +287,14 @@ class userControl {
           facultyId: userDetails._id,
 
           $or: [
-            // {
-            //   admissionDate: { $regex: "^" + search, $options: "i" },
-            // },
-            // {
-            //   currentDate: { $regex: "^" + search, $options: "i" },
-            // },
             {
-              followUpDate: { $regex: "^" + search, $options: "i" },
+              admissionDate: { $regex: "^" + search, $options: "i" },
+            },
+            {
+              currentDate: { $regex: "^" + search, $options: "i" },
+            },
+            {
+              reportingDate: { $regex: "^" + search, $options: "i" },
             },
             // Assuming 'dateField' is the name of the date field
           ],
@@ -315,7 +315,7 @@ class userControl {
       //   "application/vnd.openxmlformats-officedocument.spreadsheatml.sheet"
       // );
 
-      res.setHeader("Content-Disposition", `attachement; filename=${fileType + today}.xlsx`);
+      res.setHeader("Content-Disposition", `attachement; filename=${today}.xlsx`);
 
       return workBook.xlsx.write(res).then(() => {
         res.status(200);
@@ -328,12 +328,10 @@ class userControl {
   static updatestatusinq = async (req, res) => {
     try {
       const { comment } = req.body;
-      const today = moment().format('DD-MM-YYYY')
       if (comment) {
         const data = await counsil.findByIdAndUpdate(req.params.id, {
           $set: {
             comment: req.body.comment,
-            today:today
           },
         });
       }
@@ -357,14 +355,12 @@ class userControl {
           facultyId: userData._id,
           // multiple searching
           $or: [
-            { name: { $regex: "^" + searchinq + "$", $options: "i" } },
+            { name: { $regex: ".*" + searchinq + ".*", $options: "i" } },
             { phoneNo: { $regex: ".*" + searchinq + ".*", $options: "i" } },
-            { rollNo: { $regex: "^" + searchinq + "$", $options: "i" } },
-            { marks: { $regex: "^" + searchinq + "$", $options: "i" } },
-            { rank: { $regex: "^" + searchinq + "$", $options: "i" } },
-            { father: { $regex: "^" + searchinq + "$", $options: "i" } },
-            { branch: { $regex: "^" + searchinq + "$", $options: "i" } },
-
+            { rollNo: { $regex: ".*" + searchinq + ".*", $options: "i" } },
+            { marks: { $regex: ".*" + searchinq + ".*", $options: "i" } },
+            { rank: { $regex: ".*" + searchinq + ".*", $options: "i" } },
+            { father: { $regex: ".*" + searchinq + ".*", $options: "i" } },
           ],
         })
        
@@ -537,10 +533,9 @@ class userControl {
         // Generate a random number between 100 and 999
         return Math.floor(Math.random() * 9000) + 1000;
       }
-            let branchRoll = [];
-            branchRoll.push(req.body.branch);
-            const random = getRandomThreeDigitNumber();
-            const applicantNo = `090524` + branchRoll[0] + random;
+      const courseroll = req.body.course;
+      const random = getRandomThreeDigitNumber();
+      const applicantNo = `090524` + courseroll + random;
       const dateString = moment().format("YYYY-MM-DD");
       const {
         studentName,
@@ -838,15 +833,10 @@ class userControl {
       if (userData) {
         const isMatch = await bcrypt.compare(password, userData.password);
         if (isMatch) {
-          if (userData.is_verified === 0 ) {
+          if (userData.is_verified === 0) {
             req.flash("error", "Please verify your mail.");
             res.redirect("/login");
-          }else if(userData.is_admin === 1){
-            req.flash("error","This is not a User Account")
-            res.redirect("/login");
-          }
-          
-          else {
+          } else {
             req.session.user_id = userData._id;
             res.redirect("/clg");
           }

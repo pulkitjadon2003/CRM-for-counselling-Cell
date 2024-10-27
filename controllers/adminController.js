@@ -12,19 +12,18 @@ const leave = require('../models/leaveModel')
 
 // const cloudinary = require("cloudinary");
 // cloudinary.config({
-  //   cloud_name: "dywvtdtpy",
-  //   api_key: "655265211765838",
-  //   api_secret: "mN7DrgpBMlhqLzFxIOreh5gRJFE",
-  //   secure: false,
-  // });
-  
-  // html to pdf
-  const ejs = require("ejs");
-  const pdf = require("html-pdf");
-  const fs = require("fs");
-  const path = require("path");
-  const csv = require("csvtojson");
-  const xlsx = require('xlsx');
+//   cloud_name: "dywvtdtpy",
+//   api_key: "655265211765838",
+//   api_secret: "mN7DrgpBMlhqLzFxIOreh5gRJFE",
+//   secure: false,
+// });
+
+// html to pdf
+const ejs = require("ejs");
+const pdf = require("html-pdf");
+const fs = require("fs");
+const path = require("path");
+const csv = require("csvtojson");
 
 const { use } = require("../routes/adminRoutes");
 const { response } = require("express");
@@ -314,12 +313,9 @@ class AdminController {
   //excel
   static exportUser = async (req, res) => {
     try {
-      var today = new Date().toISOString();
-      var start = "";
-      var end = "";
-      if (req.query.startDate || req.query.endDate) {
-        start = req.query.startDate;
-        end = req.query.endDate;
+      var search = "";
+      if (req.query.date) {
+        search = req.query.date;
       }
       const fileType = req.query.fileType;
       // const date = req.query.date;
@@ -404,7 +400,7 @@ class AdminController {
         const userData = await counsellingModel.find({
           $or: [
             {
-              registrationDate: { $gte: start, $lte: end },
+              registrationDate: { $regex: "^" + search, $options: "i" },
             }, // Assuming 'dateField' is the name of the date field
           ],
         });
@@ -418,7 +414,7 @@ class AdminController {
         const userData = await registrationModel.find({
           $or: [
             {
-              registrationDate: { $gte: start, $lte: end },
+              registrationDate: { $regex: "^" + search, $options: "i" },
             }, // Assuming 'dateField' is the name of the date field
           ],
         });
@@ -431,14 +427,14 @@ class AdminController {
       if (fileType === "dte") {
         const userData = await User.find({
           $or: [
-            // {
-            //   admissionDate: { $gte: start, $lte: end },
-            // },
-            // {
-            //   currentDate: { $gte: start, $lte: end },
-            // },
             {
-              followUpDate: { $gte: start, $lte: end },
+              admissionDate: { $regex: "^" + search, $options: "i" },
+            },
+            {
+              currentDate: { $regex: "^" + search, $options: "i" },
+            },
+            {
+              reportingDate: { $regex: "^" + search, $options: "i" },
             },
             // Assuming 'dateField' is the name of the date field
           ],
@@ -454,15 +450,12 @@ class AdminController {
         cell.font = { bold: true };
       });
 
-      // res.setHeader(
-      //   "Content-Type",
-      //   "application/vnd.openxmlformats-officedocument.spreadsheatml.sheet"
-      // );
-
       res.setHeader(
-        "Content-Disposition",
-        `attachement; filename=${fileType + today}.xlsx`
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheatml.sheet"
       );
+
+      res.setHeader("Content-Disposition", `attachement; filename=users.xlsx`);
 
       return workBook.xlsx.write(res).then(() => {
         res.status(200);
@@ -542,8 +535,6 @@ class AdminController {
       res.render("admin/importData", {
         admin: userData,
         message: req.flash("message"),
-        error: req.flash("error"),
-
       });
     } catch (error) {
       console.log(error.message);
@@ -552,24 +543,17 @@ class AdminController {
   static dataImport = async (req, res) => {
     try {
       const dateString = moment().format("YYYY-MM-DD");
-      const { fileName } = req.body;
+      const { branch } = req.body;
       var userData = [];
-   
-      const workbook = xlsx.readFile(req.file.path);
-      
-      workbook.SheetNames.forEach( Sheet=>{   
-      const sheetName =Sheet; 
-      const worksheet = workbook.Sheets[sheetName];
-      const response = xlsx.utils.sheet_to_json(worksheet);
+      csv()
+        .fromFile(req.file.path)
+        .then(async (response) => {
+          // console.log(response);
           for (var x = 0; x < response.length; x++) {
-            const user =  userModel.findOne({
+            const user = await userModel.findOne({
               _id: response[x].FacultyId,
             });
-          
-
             if (user) {
-              let admissionDate = new Date((response[x].AdmissionDate - (25567 + 2)) * 86400 * 1000)
-              admissionDate = moment(admissionDate).format('DD-MM-YYYY')
               userData.push({
                 facultyId: response[x].FacultyId,
                 rank: response[x].Rank,
@@ -585,36 +569,25 @@ class AdminController {
                 phoneNo: response[x].PhoneNo,
                 ews: response[x].EWS,
                 status: response[x].Status,
-                admissionDate: admissionDate,
+                admissionDate: response[x].AdmissionDate,
                 allotedRound: response[x].AllotedRound,
                 finalStatus: response[x].FinalStatus,
                 currentDate: dateString,
-                branch: sheetName,
-                fileName:fileName
+                branch: branch,
               });
-              
             } else {
-             
-              
-              req.flash("error",`User with facultyId:${response[x].FacultyId} not found.`);
-              res.redirect("/admin/importData");
-              return;
+              req.flash("message","User with facultyId  not found.");
+      res.redirect("/admin/importData");
 
             }
           }
-        })
-        
-        console.log(userData);
           await User.insertMany(userData);
-          console.log({ status: 200, success: true, msg: "Imported" });
-          req.flash("message", "File Upload successful");
-          res.redirect("/admin/importData");
-        
-       
+        });
+      console.log({ status: 200, success: true, msg: "CSV Imported" });
+      req.flash("message", "File Upload successful");
+      res.redirect("/admin/importData");
     } catch (error) {
-      // res.send({ status: 400, success: false, msg: error.message });
-        req.flash("error",` Error: While appointing this '${error.value}' Faculty Id`);
-        res.redirect("/admin/importData");
+      res.send({ status: 400, success: false, msg: error.message });
     }
   };
   static dteList = async (req, res) => {
@@ -653,35 +626,32 @@ class AdminController {
             $or: [
               {
                 name: {
-                  $regex: "^" + searchinq2 + "$",
+                  $regex: ".*" + searchinq2 + ".*",
                   $options: "i",
                 },
               },
               {
                 rollNo: {
-                  $regex: "^" + searchinq2 + "$",
+                  $regex: ".*" + searchinq2 + ".*",
                   $options: "i",
                 },
               },
               {
                 rank: {
-                  $regex: "^" + searchinq2 + "$",
+                  $regex: ".*" + searchinq2 + ".*",
                   $options: "i",
                 },
               },
 
-              { phoneNo: { $regex: "^" + searchinq2 + "$", $options: "i" } },
+              { phoneNo: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
               {
                 father: {
-                  $regex: "^" + searchinq2 + "$",
+                  $regex: ".*" + searchinq2 + ".*",
                   $options: "i",
                 },
               },
 
-              { fileName: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
-              { branch: { $regex: "^" + searchinq2 + "$", $options: "i" } },
-
-              
+              { father: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
             ],
           },
         ],
@@ -694,6 +664,9 @@ class AdminController {
           ["marks", -1], // Sorting by marks in descending order
         ])
         .exec();
+
+      // data.sort((a, b) => parseFloat(b.marks) - parseFloat(a.marks));
+      // console.log(data);
 
       res.render("admin/dteList", {
         user: data,
@@ -931,85 +904,78 @@ class AdminController {
     try {
       const userData = await userModel.findOne({ _id: req.session.user_id });
 
-        var searchinq1 = "";
-        if (req.query.searchinq1) {
-          searchinq1 = req.query.searchinq1;
-        }
-        // console.log(searchreq1);
+      var searchreq1 = "";
+      if (req.query.searchreq1) {
+        searchreq1 = req.query.searchreq1;
+      }
+      // console.log(searchreq1);
 
-        var searchinq2 = "";
-        if (req.query.searchinq2) {
-          searchinq2 = req.query.searchinq2;
-        }
-        // console.log(searchreq2);
+      var searchreq2 = "";
+      if (req.query.searchreq2) {
+        searchreq2 = req.query.searchreq2;
+      }
+      // console.log(searchreq2);
 
-        const usersreq = await registrationModel
-          .find({
-            // multiple searching
-            $and: [
-              {
-                $or: [
-                  {
-                    registrationDate: {
-                      $regex: "^" + searchinq1,
-                      $options: "i",
-                    },
-                  }, // Assuming 'dateField' is the name of the date field
-                ],
-              },
-              {
-                $or: [
-                  {
-                    studentName: {
-                      $regex: ".*" + searchinq2 + ".*",
-                      $options: "i",
-                    },
+      const usersreq = await registrationModel
+        .find({
+          // multiple searching
+          $and: [
+            {
+              $or: [
+                {
+                  registrationDate: { $regex: "^" + searchreq1, $options: "i" },
+                }, // Assuming 'dateField' is the name of the date field
+              ],
+            },
+            {
+              $or: [
+                {
+                  studentName: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
                   },
-                  {
-                    applicantNo: {
-                      $regex: ".*" + searchinq2 + ".*",
-                      $options: "i",
-                    },
+                },
+                {
+                  applicantNo: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
                   },
-                  {
-                    mobile: { $regex: ".*" + searchinq2 + ".*", $options: "i" },
+                },
+                { mobile: { $regex: ".*" + searchreq2 + ".*", $options: "i" } },
+                {
+                  fatherName: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
                   },
-                  {
-                    fatherName: {
-                      $regex: ".*" + searchinq2 + ".*",
-                      $options: "i",
-                    },
+                },
+                { email: { $regex: ".*" + searchreq2 + ".*", $options: "i" } },
+                // { fatherName: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
+                {
+                  "courses.course": {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
                   },
-                  {
-                    email: { $regex: ".*" + searchinq2 + ".*", $options: "i" },
+                },
+                {
+                  "courses.branch": {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
                   },
-                  // { fatherName: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
-                  {
-                    "courses.course": {
-                      $regex: ".*" + searchinq2 + ".*",
-                      $options: "i",
-                    },
+                },
+                {
+                  facultyName: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
                   },
-                  {
-                    "courses.branch": {
-                      $regex: ".*" + searchinq2 + ".*",
-                      $options: "i",
-                    },
-                  },
-                  {
-                    facultyName: {
-                      $regex: ".*" + searchinq2 + ".*",
-                      $options: "i",
-                    },
-                  },
-                ],
-              },
-            ],
+                },
+              ],
+            },
+          ],
 
-            // Add more conditions here using $and operator if needed
-          })
-          .sort({ _id: -1 })
-          .exec();
+          // Add more conditions here using $and operator if needed
+        })
+        .sort({ _id: -1 })
+        .exec();
       res.render("admin/registrationData", {
         user: usersreq,
         admin: userData,
@@ -1053,7 +1019,7 @@ class AdminController {
       const data = await registrationModel.findById(req.params.id);
       const userData = await userModel.findOne({ _id: req.session.user_id });
 
-      res.render("admin/editRegistration", { users: data, admin: userData });
+      res.render("admin/editRegistration", { user: data, admin: userData });
     } catch (error) {
       console.log(error.message);
     }
@@ -1149,9 +1115,9 @@ class AdminController {
         fatherName,
         state,
         city,
+        registrationDate, 
         inquirySource,
         status,
-        registrationDate,
         facultyName,
         jeeAppearance,
         domicile,
@@ -1239,27 +1205,15 @@ class AdminController {
   static registrationData = async (req, res) => {
     try {
       const userData = await userModel.findOne({ _id: req.session.user_id });
-      const currentYear = moment().format('YY')
       const facultyId = userData._id;
-      // console.log(facultyId);
+      console.log(facultyId);
       function getRandomThreeDigitNumber() {
         // Generate a random number between 100 and 999
         return Math.floor(Math.random() * 9000) + 1000;
       }
-      let branchRoll=[];
-      // const branchArray = req.body.branch
-      if (req.body.course == 'BTech' ) {
-          branchRoll.push(...req.body.branch);
-          if(branchRoll[0].includes('CSE-'))
-            branchRoll[0] =  branchRoll[0].replace('CSE-','')
-            
-      }
-      else{
-        branchRoll.push(req.body.course);
-      }
-      // console.log(branchRoll);
+      const branchRoll = req.body.branch;
       const random = getRandomThreeDigitNumber();
-      const applicantNo = `0905${currentYear}` + branchRoll[0] + random;
+      const applicantNo = `090524` + branchRoll[0] + random;
       const dateString = moment().format("YYYY-MM-DD");
       const {
         studentName,
@@ -1290,15 +1244,13 @@ class AdminController {
         jeeEnrollmentNumber,
         jeeMarksPercentile,
         jeeRank,
-        
         schemeOpted,
         inquirySource,
-        additionDetails,
-        
+        hostel,
+        busExeption,
         registrationStatus,
         facultyName,
         referralName,
-        mpDomicile,
       } = req.body;
       const userFound = await registrationModel.findOne({
         $and: [{ studentName: studentName }, { mobile: mobile }],
@@ -1322,7 +1274,7 @@ class AdminController {
             address: address,
             gender: gender,
             email: email,
-            
+            nationality: nationality,
             category: category,
             mobile: mobile,
             guardianMobile: guardianMobile,
@@ -1354,12 +1306,14 @@ class AdminController {
             schemeOpted: schemeOpted,
             inquirySource: inquirySource,
             // status: status,
-            additionDetails:additionDetails,
+            additionDetails: {
+              hostel: hostel,
+              busExeption: busExeption,
+            },
             registrationStatus: registrationStatus,
             registrationDate: dateString,
             referralName: referralName,
             facultyName: facultyName,
-            mpDomicile:mpDomicile,
           });
           const registeredData = await registerData.save();
           res.render("admin/viewFullRegistration", {
@@ -1487,42 +1441,42 @@ class AdminController {
                $or: [
                  {
                    applicantName: {
-                     $regex: "^" + searchinq2 + ".*",
+                     $regex: ".*" + searchinq2 + ".*",
                      $options: "i",
                    },
                  },
                  {
                    applicantNo: {
-                     $regex: "^" + searchinq2 + ".*",
+                     $regex: ".*" + searchinq2 + ".*",
                      $options: "i",
                    },
                  },
                  {
-                   mobile: { $regex: "^" + searchinq2 + ".*", $options: "i" },
+                   mobile: { $regex: ".*" + searchinq2 + ".*", $options: "i" },
                  },
                  {
                    fatherName: {
-                     $regex: "^" + searchinq2 + ".*",
+                     $regex: ".*" + searchinq2 + ".*",
                      $options: "i",
                    },
                  },
-                 { email: { $regex: "^" + searchinq2 + ".*", $options: "i" } },
-                 // { fatherName: { $regex: "^" + searchinq2 + ".*", $options: "i" } },
+                 { email: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
+                 // { fatherName: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
                  {
                    "courses.course": {
-                     $regex: "^" + searchinq2 + ".*",
+                     $regex: ".*" + searchinq2 + ".*",
                      $options: "i",
                    },
                  },
                  {
                    "courses.branch": {
-                     $regex: "" + searchinq2 + "$",
+                     $regex: ".*" + searchinq2 + ".*",
                      $options: "i",
                    },
                  },
                  {
                    facultyName: {
-                     $regex: "^" + searchinq2 + ".*",
+                     $regex: ".*" + searchinq2 + ".*",
                      $options: "i",
                    },
                  },
@@ -1546,84 +1500,78 @@ class AdminController {
     try {
       const userData = await userModel.findOne({ _id: req.session.user_id });
 
-    var searchinq1 = "";
-    if (req.query.searchinq1) {
-      searchinq1 = req.query.searchinq1;
-    }
-    // console.log(searchreq1);
+      var searchreq1 = "";
+      if (req.query.searchreq1) {
+        searchreq1 = req.query.searchreq1;
+      }
+      // console.log(searchreq1);
 
-    var searchinq2 = "";
-    if (req.query.searchinq2) {
-      searchinq2 = req.query.searchinq2;
-    }
-    // console.log(searchreq2);
+      var searchreq2 = "";
+      if (req.query.searchreq2) {
+        searchreq2 = req.query.searchreq2;
+      }
+      // console.log(searchreq2);
 
-    const usersreq = await registrationModel
-    .find({
-      // multiple searching
-      $and: [
-        {
-          $or: [
+      const usersreq = await registrationModel
+        .find({
+          // multiple searching
+          $and: [
             {
-              registrationDate: {
-                $regex: "^" + searchinq1,
-                $options: "i",
-              },
-            }, // Assuming 'dateField' is the name of the date field
-          ],
-        },
-        {
-          $or: [
-            {
-              applicantName: {
-                $regex: "^" + searchinq2 + ".*",
-                $options: "i",
-              },
+              $or: [
+                {
+                  registrationDate: { $regex: "^" + searchreq1, $options: "i" },
+                }, // Assuming 'dateField' is the name of the date field
+              ],
             },
             {
-              applicantNo: {
-                $regex: "^" + searchinq2 + "$",
-                $options: "i",
-              },
-            },
-            {
-              mobile: { $regex: "^" + searchinq2 + "$", $options: "i" },
-            },
-            {
-              fatherName: {
-                $regex: "^" + searchinq2 + ".*",
-                $options: "i",
-              },
-            },
-            { email: { $regex: "^" + searchinq2 + "$", $options: "i" } },
-            // { fatherName: { $regex: "^" + searchinq2 + ".*", $options: "i" } },
-            {
-              "courses.course": {
-                $regex: "^" + searchinq2 + "$",
-                $options: "i",
-              },
-            },
-            {
-              "courses.branch": {
-                $regex: "" + searchinq2 + "$",
-                $options: "i",
-              },
-            },
-            {
-              facultyName: {
-                $regex: "^" + searchinq2 + "$",
-                $options: "i",
-              },
+              $or: [
+                {
+                  studentName: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
+                  },
+                },
+                {
+                  applicantNo: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
+                  },
+                },
+                { mobile: { $regex: ".*" + searchreq2 + ".*", $options: "i" } },
+                {
+                  fatherName: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
+                  },
+                },
+                { email: { $regex: ".*" + searchreq2 + ".*", $options: "i" } },
+                // { fatherName: { $regex: ".*" + searchinq2 + ".*", $options: "i" } },
+                {
+                  "courses.course": {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
+                  },
+                },
+                {
+                  "courses.branch": {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
+                  },
+                },
+                {
+                  facultyName: {
+                    $regex: ".*" + searchreq2 + ".*",
+                    $options: "i",
+                  },
+                },
+              ],
             },
           ],
-        },
-      ],
 
-      // Add more conditions here using $and operator if needed
-    })
-
-      .sort({ _id: -1 })
-      .exec();
+          // Add more conditions here using $and operator if needed
+        })
+        .sort({ _id: -1 })
+        .exec();
       res.render("admin/registerReports", {
         user: usersreq,
         admin: userData,

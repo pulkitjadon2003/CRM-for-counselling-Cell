@@ -1,10 +1,10 @@
 <%- include('./header.ejs') %>
-    <h1 class="mt-5 mx-5">View Full Registration</h1>
-          <a href="/admin/editreg/<%= view._id %>" class="btn btn-success ms-5 ">Edit</a>
+    <h1 class="mt-5">view Full Registration</h1>
+          <a href="/editreg/<%= view._id %>" class="btn btn-success ">edit</a>
     <a class="btn btn-info" href="/admin/print/<%= view._id %>">Print</a>
 
 
-<div class="container py-5">
+<div class="container">
     <table class="table table-bordered">
       <tr>
         <th>Id</th>
@@ -41,7 +41,7 @@
         <td><%=view.motherName %></td>
       </tr>
        <tr>
-        <th>Guardian's Mobile</th>
+        <th>Father's Mobile</th>
         <td><%=view.guardianMobile %></td>
       </tr>
        <tr>
@@ -62,12 +62,8 @@
         <td><%=view.address %></td>
       </tr>
       
-      <tr>
-        <th>MP Domicile</th>
-        <td><%=view.mpDomicile %></td>
-      </tr>
+       
        <tr>
-        
         <th>Category</th>
         <td><%=view.category %></td>
       </tr>
@@ -75,12 +71,10 @@
         <th>Course</th>
         <td><%=view.courses.course %></td>
       </tr>
-      <%if(view.courses.branch != ''){%>
        <tr>
-        <th>Branch</th>
+        <th>Degree</th>
         <td><%=view.courses.branch %></td>
       </tr>
-      <%}%>
        <tr>
         <th>State</th>
         <td><%=view.location.state %></td>
@@ -89,7 +83,6 @@
         <th>City</th>
         <td><%=view.location.city %></td>
       </tr>
-      
       <tr>
         <th>Jee Enrollment Number</th>
         <td><%=view.jeeMains.jeeEnrollmentNumber %></td>
@@ -121,14 +114,6 @@
        <tr>
         <th>Registration Date</th>
         <td><%=view.registrationDate %></td>
-      </tr>
-      <tr>
-        <th>Scheme Opted</th>
-        <td><%=view.schemeOpted %></td>
-      </tr>
-      <tr>
-        <th>Additional Details</th>
-        <td><%=view.additionalDetails %></td>
       </tr>
       <tr>
         <th>Faculty Name</th>

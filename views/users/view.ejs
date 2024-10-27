@@ -1,9 +1,9 @@
 <%- include('./header.ejs') %>
-    <h1 class="mt-5 px-5">View Full Enquiry</h1>
+    <h1 class="mt-5">view Full Inquiry</h1>
       
 
-<div class="container py-5" >
-    <table class="table table-bordered  ">
+<div class="container">
+    <table class="table table-bordered">
       <tr>
         <th>Id</th>
         <td><%=view._id %></td>
@@ -25,7 +25,7 @@
         <td><%=view.fatherName %></td>
       </tr>
        <tr>
-        <th>Guardian's Mobile</th>
+        <th>Father's Mobile</th>
         <td><%=view.guardianMobile %></td>
       </tr>
        <tr>
@@ -50,46 +50,24 @@
         <td><%=view.city %></td>
       </tr>
       <tr>
-        <th>Approval Status</th>
-        <td class="<%= view.inquiryStatus%> text-capitalize"><%= view.inquiryStatus %></td>
-      </tr>
-      <tr>
-        <th>Qualifying Degree</th>
-        <td class="text-capitalize"><%=view.qualifyingDegree %></td>
+        <th>Enquiry Status</th>
+        <td class="<%= view.inquiryStatus%>"><%= view.inquiryStatus %></td>
       </tr>
        <tr>
         <th>Jee Appearance</th>
-        <td class="text-capitalize"><%=view.jeeAppearance %></td>
+        <td><%=view.jeeAppearance %></td>
       </tr>
       <tr>
         <th>Domicile</th>
-        <td class="text-capitalize"><%=view.domicile %></td>
+        <td><%=view.domicile %></td>
       </tr>
-      <tr>
-        <th>Course</th>
-        <td class="text-capitalize"><%=view.courses.course %></td>
-      </tr>
-      <%if(view.courses.branch != ''){%>
-        <tr>
-          <th>Course</th>
-          <td class="text-capitalize"><%=view.courses.branch.join(',') %></td>
-        </tr>
-      <%}%>
       <tr>
         <th>Category</th>
         <td><%=view.category %></td>
       </tr>
       <tr>
-        <th>Enquiry Source</th>
-        <td><%=view.inquirySource %></td>
-      </tr>
-      <tr>
         <th>Enquiry Date</th>
         <td><%=view.registrationDate %></td>
-      </tr>
-      <tr>
-        <th>Faculty Name</th>
-        <td><%=view.facultyName %></td>
       </tr>
     </table>
 

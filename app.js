@@ -3,7 +3,7 @@ const app = express();
 
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb+srv://dbUser:pulkit12@pulkitscluster.5odkhln.mongodb.net/?retryWrites=true&w=majority&appName=PulkitsCluster")
+  .connect("mongodb+srv://dbUser:pulkit12@pulkitscluster.5odkhln.mongodb.net/test")
   .then((result) => {
     console.log("connection successfull");
   })
@@ -11,10 +11,7 @@ mongoose
     console.log(err);
   });
 
-  //
-
-//
-
+  
 const config = require('./config/config')
 
 const session = require("express-session");
@@ -55,7 +52,7 @@ app.use('/admin', admin)
 
 
 
-const port=8000
-app.listen(port, function () {
-  console.log("serving is running on ",port);
+
+app.listen(3000, function () {
+  console.log("serving is running on 3000");
 });

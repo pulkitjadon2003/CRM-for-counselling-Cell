@@ -95,9 +95,6 @@ const counsilSchema = new mongoose.Schema(
     },
     category: {
       type:String,
-    },
-    today:{
-      type:String,
     }
   },
   { timestamps: true }

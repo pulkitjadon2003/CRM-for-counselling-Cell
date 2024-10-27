@@ -5,7 +5,7 @@ const branches = {
     "CSE",
     "CSE-AIML",
     "CSE-CyberSecurity",
-    "CSE-DS",
+    "CS-DS",
     "CSE-IOT",
     "IT",
     "ECE",
@@ -18,19 +18,19 @@ const branches = {
 const courseSelect = document.querySelector("#select-course");
 
 const branchSelect = document.querySelectorAll(".select-branch");
-// console.log(branchSelect);
+console.log(branchSelect);
 
 const branchSelect1 = document.querySelector("#select-branch1");
 
-const branchSelect2 = document.querySelectorAll("#select-branch2");
+const branchSelect2 = document.querySelector("#select-branch2");
 
-const branchSelect3 = document.querySelectorAll("#select-branch3");
+const branchSelect3 = document.querySelector("#select-branch3");
 
 const branchLabel1 = document.querySelector("#branchLabel1");
 
-const branchLabel2 = document.querySelectorAll("#branchLabel2");
+const branchLabel2 = document.querySelector("#branchLabel2");
 
-const branchLabel3 = document.querySelectorAll("#branchLabel3");
+const branchLabel3 = document.querySelector("#branchLabel3");
 
 courses.forEach((course) => {
   const option = document.createElement("option");
@@ -41,32 +41,15 @@ courses.forEach((course) => {
 
 courseSelect.addEventListener("change", function () {
   branchSelect1.removeAttribute("name");
-
-  branchSelect2.forEach(elem=>{
-    elem.removeAttribute("name");
-  })
-  branchSelect3.forEach(elem=>{
-    elem.removeAttribute("name");
-  })
+  branchSelect2.removeAttribute("name");
+  branchSelect3.removeAttribute("name");
 
   if (this.value == "MTech") {
     branchSelect1.style.display = "block";
-    branchSelect2.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-
-    branchSelect3.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-    
-    branchLabel2.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-
-    branchLabel3.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-    
+    branchSelect2.style.display = "none";
+    branchSelect3.style.display = "none";
+    branchLabel2.style.display = "none";
+    branchLabel3.style.display = "none";
     branchLabel1.style.display = "block";
     branchSelect1.setAttribute("name", "branch");
     const seletedBranch = this.value;
@@ -74,26 +57,11 @@ courseSelect.addEventListener("change", function () {
     populateCourseDropdown(branchList);
   } else if (this.value == "BTech") {
     branchSelect1.style.display = "block";
-
-    branchSelect2.forEach(elem=>{
-      elem.style.display = 'block';
-    })
-
-    branchSelect3.forEach(elem=>{
-      elem.style.display = 'block';
-    })
-    
-    branchLabel2.forEach(elem=>{
-      elem.style.display = 'block';
-    })
-
-    branchLabel3.forEach(elem=>{
-      elem.style.display = 'block';
-    })
-
-   
+    branchSelect2.style.display = "block";
+    branchSelect3.style.display = "block";
     branchLabel1.style.display = "block";
-
+    branchLabel2.style.display = "block";
+    branchLabel3.style.display = "block";
     branchSelect.forEach((branch) => {
       branch.setAttribute("name", "branch");
     });
@@ -102,34 +70,21 @@ courseSelect.addEventListener("change", function () {
     populateCourseDropdown(branchList);
   } else {
     branchSelect1.style.display = "none";
+    branchSelect2.style.display = "none";
+    branchSelect3.style.display = "none";
+    branchLabel2.style.display = "none";
+    branchLabel3.style.display = "none";
     branchLabel1.style.display = "none";
-
-    branchSelect2.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-
-    branchSelect3.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-    
-    branchLabel2.forEach(elem=>{
-      elem.style.display = 'none';
-    })
-
-    branchLabel3.forEach(elem=>{
-      elem.style.display = 'none';
-    })
   }
 
   function populateCourseDropdown(branchList) {
     branchSelect.forEach((elem) => {
       if (elem.style.display == "block") {
-        // console.log(elem);
+        console.log(elem);
         elem.innerHTML = '<option value="">Select </option>';
         branchList.forEach((branch) => {
           const option = document.createElement("option");
           option.value = branch;
-          
           option.textContent = branch;
           elem.appendChild(option);
         });
@@ -137,7 +92,3 @@ courseSelect.addEventListener("change", function () {
     });
   }
 });
-
-function printload(elem) {
-  console.log('hi');
-}

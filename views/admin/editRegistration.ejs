@@ -1,7 +1,6 @@
-<%- include('./header.ejs') %>
+<% include('../layouts/header.ejs')  %>
 
-
-<h1>Edit Student Registration</h1>
+<h1>edit User Registration</h1>
 
 <% if(typeof message !== 'undefined'){%>
     <p style="color: red;">
@@ -10,7 +9,7 @@
         <%}%>
         
         
-        <div class="row px-5">
+        <div class="row">
 
             <form action="/admin/edit-user-reg" method="post" style="display: contents;" autocomplete="off">
               
@@ -35,7 +34,7 @@
                       </div>
 
                       <div class="form-floating mb-2 ">
-                        <input type="text" value="<%=users.occupation %>" class="form-control" name="occupation" id="floatingName" placeholder=" " autocomplete="off" >
+                        <input type="text" class="form-control" name="occupation" id="floatingName" placeholder=" " autocomplete="off" >
                         <label for="floatingName">Occupation</label>
                       </div>
 
@@ -48,13 +47,13 @@
                           <h6>Gender:</h6>
                         </div>
                           <div class="form-check col">
-                              <input class="form-check-input" name="gender" value="male" type="radio" name="flexRadioDefault" id="RadioMale" <% if(users.gender == 'Male'){%> checked <% }%> >
+                              <input class="form-check-input" name="gender" value="male" type="radio" name="flexRadioDefault" id="RadioMale" >
                               <label class="form-check-label" for="RadioMale">
                                 Male
                               </label>
                             </div>
                             <div class="form-check col">
-                              <input class="form-check-input" name="gender" value="female" type="radio" name="flexRadioDefault" id="RadioFemale" <% if(users.gender == 'Female'){%> checked <% }%>>
+                              <input class="form-check-input" name="gender" value="female" type="radio" name="flexRadioDefault" id="RadioFemale">
                               <label class="form-check-label" for="RadioFemale">
                                 Female
                               </label>
@@ -63,66 +62,51 @@
                       
                       
                       <div class="form-floating mb-2 ">
-                        <input type="email" value="<%=users.email %>" name="email" class="form-control" id="floatingEmail" placeholder="" autocomplete="off">
+                        <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="" autocomplete="off">
                         <label for="floatingEmail">Email address</label>
                       </div>
                       
                     </div>
                       <div class="container-fluid col-md-6 d-inline" id="formInq">
                         <div class="row g-3  mb-2">
-                          <div class="col-md">
-                          <div class="form-floating mb-2 ">
-                            <select id="mpDomicile" class="form-select mb-2" name="mpDomicile" required>
-                              <option value="">Select</option>
-                              <% const optionsOfDomicile = ["Yes","No"] %>
-                            <% optionsOfDomicile.forEach((elem)=>{ %>
-                    <option <% if(elem == users.mpDomicile){%>selected <%}%> value="<%= elem%>"><%= elem%></option>       
-                              <% }) %>
-                  
-  
-                            </select>
-                            <label for="floatingEmail" class="d-flex">MP Domicile <h5 style="color: red;">*</h5></label>
-                          </div>
-                          </div>
-                          <div class="col-md">
-                            <div class="form-floating mb-2 ">
-                              <select type="text" name="category" class="form-select" id="floatingInput" placeholder="Category" required>
-                                <option value="" >Select </option>
-                                <% const optionsOfCategory = ['SC','ST','OBC','EWS','General'] %>
-                            <% optionsOfCategory.forEach((elem)=>{ %>
-                    <option <% if(elem == users.category){%>selected <%}%> value="<%= elem%>"><%= elem%></option>       
-                              <% }) %>
-                              </select>
-                              <label for="floatingSelect" class="d-flex">Category<h5 style="color: red;">*</h5></label>
-                            </div>
-                          </div>
-                          </div>
-  
+                        <div class="col-md">
+                        <div class="form-floating mb-2 ">
+                          <input type="text" name="nationality" class="form-control" id="floatingEmail" placeholder="" autocomplete="off">
+                          <label for="floatingEmail">Nationality</label>
+                        </div>
+                        </div>
+                        <div class="col-md">
+                        <div class="form-floating mb-2 ">
+                          <input type="text" name="category" class="form-control" id="floatingEmail" placeholder="" autocomplete="off">
+                          <label for="floatingEmail">Category</label>
+                        </div>
+                        </div>
+                        </div>
 
                         
                       
 
                         <div class="form-floating mb-2">
-                            <input type="number" class="form-control" name="mobile" id="floatingContact" placeholder="" value="<%=users.mobile%>" autocomplete="off">
+                            <input type="number" class="form-control" name="mobile" id="floatingContact" placeholder="" value="" autocomplete="off">
                             <label for="floatingContact">Contact No.</label>
                           </div>
                           
                           <div class="form-floating mb-2 ">
-                            <input type="number" name="guardianMobile" class="form-control" id="floatingGC" placeholder="" value="<%=users.guardianMobile%>" autocomplete="off">
+                            <input type="number" name="guardianMobile" class="form-control" id="floatingGC" placeholder="" value="" autocomplete="off">
                             <label for="floatingGC">Guardian Contact</label>
                           </div>
 
                            <h5>JEE Mains</h5>
                     <div class="form-floating mb-2">
-                      <input type="text" class="form-control" id="floatingInputGrid" name="jeeEnrollmentNumber" placeholder="" value="<%=users.jeeMains.jeeEnrollmentNumber%>" autocomplete="off">
+                      <input type="text" class="form-control" id="floatingInputGrid" name="jeeEnrollmentNumber" placeholder="" value="" autocomplete="off">
                       <label for="floatingInputGrid">Enrollment Number</label>
                     </div>
                     <div class="form-floating mb-2">
-                      <input type="text" class="form-control" id="floatingInputGrid" name="jeeMarksPercentile" placeholder="" value="<%=users.jeeMains.jeeMarksPercentile%>" autocomplete="off">
+                      <input type="text" class="form-control" id="floatingInputGrid" name="jeeMarksPercentile" placeholder="" value="" autocomplete="off">
                       <label for="floatingInputGrid">Marks/Percentile </label>
                     </div>
                     <div class="form-floating mb-2">
-                      <input type="text" class="form-control" id="floatingInputGrid" name="jeeRank" placeholder="" value="<%=users.jeeMains.jeeRank%>" autocomplete="off">
+                      <input type="text" class="form-control" id="floatingInputGrid" name="jeeRank" placeholder="" value="" autocomplete="off">
                       <label for="floatingInputGrid">Rank </label>
                     </div>
 
@@ -165,7 +149,7 @@
 
                       </div>
                       
-                      <div class="container-fluid col-md-6" id="formInq">
+                      <div class="container-fluid col-md-5 ms-4" id="formInq">
             <h5>Educational Qualification</h5>
             <h5>10th:</h5>
 
@@ -176,14 +160,14 @@
                   <input type="hidden" class="form-control" id="floatingInputGrid" placeholder="" name="degreeName" value="10th" autocomplete="off">
 
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" value="<%=users.qualifyingDegree.percentage[0]%>" name="percentage" autocomplete="off">
+                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="percentage" autocomplete="off">
                   <label for="floatingInputGrid">(%)/CGPA</label>
                 </div>
 
               </div>
               <div class="col-md">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="examinationAuthority" value="<%=users.qualifyingDegree.examinationAuthority[0]%>" autocomplete="off">
+                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="examinationAuthority" autocomplete="off">
                   <label for="floatingInputGrid">Examination Authority</label>
                 </div>
 
@@ -194,7 +178,7 @@
               
               <div class="col-md">
               <div class="form-floating mb-2">
-                <input type="text" class="form-control" name="passingYear" value="<%=users.qualifyingDegree.passingYear[0]%>" id="floatingInputGrid" placeholder="" autocomplete="off">
+                <input type="text" class="form-control" name="passingYear" id="floatingInputGrid" placeholder="" autocomplete="off">
                 <label for="floatingInputGrid">Year of Passing*</label>
               </div>
               </div>
@@ -211,14 +195,14 @@
               <div class="col-md">
                 
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="percentage" value="<%=users.qualifyingDegree.percentage[1]%>" autocomplete="off">
+                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="percentage" autocomplete="off">
                   <label for="floatingInputGrid">(%)/CGPA</label>
                 </div>
 
               </div>
               <div class="col-md">
                 <div class="form-floating">
-                  <input type="text" class="form-control" value="<%=users.qualifyingDegree.examinationAuthority[1]%>" id="floatingInputGrid" placeholder="" name="examinationAuthority" autocomplete="off">
+                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="examinationAuthority" autocomplete="off">
                   <label for="floatingInputGrid">Examination Authority</label>
                 </div>
 
@@ -229,14 +213,14 @@
 
               <div class="col-md">
                 <div class="form-floating mb-2">
-                  <input type="text" value="<%=users.qualifyingDegree.subjectStream[0]%>" class="form-control" name="subjectStream" id="floatingInputGrid" placeholder="stream" autocomplete="off">
+                  <input type="text" class="form-control" name="subjectStream" id="floatingInputGrid" placeholder="stream" autocomplete="off">
                   <label for="floatingInputGrid">Stream</label>
                 </div>
                 </div>
               
               <div class="col-md">
               <div class="form-floating mb-2">
-                <input type="text" class="form-control" name="passingYear" value="<%=users.qualifyingDegree.passingYear[1]%>" id="floatingInputGrid" placeholder="" autocomplete="off">
+                <input type="text" class="form-control" name="passingYear" id="floatingInputGrid" placeholder="" autocomplete="off">
                 <label for="floatingInputGrid">Year of Passing*</label>
               </div>
               </div>
@@ -251,14 +235,14 @@
               
               <div class="col-md">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="percentage" value="<%=users.qualifyingDegree.percentage[2]%>" autocomplete="off">
+                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="percentage" autocomplete="off">
                   <label for="floatingInputGrid">(%)/CGPA</label>
                 </div>
 
               </div>
               <div class="col-md">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" value="<%=users.qualifyingDegree.examinationAuthority[2]%>" name="examinationAuthority" autocomplete="off">
+                  <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="examinationAuthority" autocomplete="off">
                   <label for="floatingInputGrid">College Name</label>
                 </div>
 
@@ -269,7 +253,7 @@
               
               <div class="col-md">
               <div class="form-floating mb-2">
-                <input type="text" class="form-control" name="passingYear" id="floatingInputGrid" placeholder="" value="<%=users.qualifyingDegree.passingYear[2]%>" autocomplete="off">
+                <input type="text" class="form-control" name="passingYear" id="floatingInputGrid" placeholder="" autocomplete="off">
                 <label for="floatingInputGrid">Year of Passing*</label>
               </div>
               </div>
@@ -326,54 +310,58 @@
                       <div class="form-floating mb-2">
                         <select class="form-select" name="paymentMode" id="floatingSelectGrid" aria-label="Floating label select example">
                           <option selected>Select</option>
-                          <% const optionOfPayment = ['Cash','Cheque','Online'] %>
-                          <% optionOfPayment.forEach((elem)=>{ %>
-                    <option <% if(elem == users.registrationFee.paymentMode){%> selected <%}%> value="<%= elem%>"><%= elem%></option>
-                                
-                          <% }) %>
+                          <option value="cash">Cash</option>
+                          <option value="rtgs">RTGS</option>
+                          <option value="upi">UPI</option>
                         </select>
                         <label for="floatingSelectGrid">Payment Mode</label>
                       </div>
 
                       <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingInputGrid" name="amount" placeholder="" value="<%=users.registrationFee.amount%>" autocomplete="off">
+                        <input type="text" class="form-control" id="floatingInputGrid" name="amount" placeholder="" value="" autocomplete="off">
                         <label for="floatingInputGrid">Amount </label>
                       </div>
 
                       <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingInputGrid" name="receiptNumber" placeholder="" value="<%=users.registrationFee.receiptNumber%>" autocomplete="off">
+                        <input type="text" class="form-control" id="floatingInputGrid" name="receiptNumber" placeholder="" value="" autocomplete="off">
                         <label for="floatingInputGrid">Receipt Number </label>
                       </div>
 
                       <div class="form-floating mb-2">
-                        <input type="date" class="form-control" id="floatingInputGrid" name="receiptDate" placeholder="" value="<%=users.registrationFee.receiptDate%>" autocomplete="off">
+                        <input type="date" class="form-control" id="floatingInputGrid" name="receiptDate" placeholder="" value="" autocomplete="off">
                         <label for="floatingInputGrid">Receipt Date </label>
                       </div>
 
 
                       <h6>Opted Scheme Benefits:</h6>
                       <div class="btn-group mb-2" role="group" aria-label="Basic checkbox toggle button group">
-                        <% const optionsOfBenefits = ['Early Bird','Merit List','Special Case','TFW','EWS']%>
-                        <% optionsOfBenefits.forEach((elem,idx)=>{ %>
-                          <input type="checkbox" class="btn-check" name="schemeOpted" value="<%=elem%>" id="btncheck<%=idx%>" autocomplete="off">
-                          <label class="btn btn-outline-danger"  for="btncheck<%=idx%>"><%=elem%></label>
-
-                       <% })%>
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="earlyBird" id="btncheck1" autocomplete="off">
+                        <label class="btn btn-outline-danger"  for="btncheck1">Early Bird</label>
                       
-                       
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="meritList" id="btncheck2" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="btncheck2">Merit List</label>
+                      
+                      
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="specialCase" id="btncheck3" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="btncheck3">Special Case</label>
+
+
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="tfw" id="btncheck4" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="btncheck4">TFW</label>
+                      
+                        <input type="checkbox" class="btn-check" name="schemeOpted" value="ews" id="btncheck5" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="btncheck5">EWS</label>
                       </div>
 
                       <h6>Additional Details:
                       </h6>
 
                       <div class="btn-group mb-2" role="group" aria-label="Basic checkbox toggle button group">
-                        <% const optionsOfAdditional = ['Hostel','Bus Exeption']%>
-                        <% let count = 6; %>
-                        <% optionsOfAdditional.forEach((elem)=>{ %>
-                          <input type="checkbox" class="btn-check" name="schemeOpted" value="<%=elem%>" id="btncheck<%=count%>" autocomplete="off">
-                          <label class="btn btn-outline-danger"  for="btncheck<%=count++%>"><%=elem%></label>
-
-                       <% })%>
+                        <input type="checkbox" class="btn-check" name="hostel" value="hostel" id="btncheck6" autocomplete="off">
+                        <label class="btn btn-outline-danger"  for="btncheck6">Hostel</label>
+                      
+                        <input type="checkbox" class="btn-check" name="busExeption" value="busExeption" id="btncheck7" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="btncheck7">Bus Exeption</label>
           
                       </div>
                       <div class="row g-3  mb-2">
